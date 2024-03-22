@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import './CountdownTimer.css'; 
 import InputForm from './InputForm';
 import CountdownDisplay from './CountdownDisplay';
+import alarmSound from '../assets/alarm.mp3.wav'; // Import the audio file
 
 const CountdownTimer = () => {
   const [targetDate, setTargetDate] = useState(localStorage.getItem('targetDate') || '');
   const [countdown, setCountdown] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [timerCompleted, setTimerCompleted] = useState(false);
+
+  const alarmAudio = new Audio(alarmSound); // Create audio element
 
   const handleInputChange = (e) => {
     setTargetDate(e.target.value);
@@ -45,7 +48,7 @@ const CountdownTimer = () => {
             return prevCountdown - 1000;
           } else {
             clearInterval(interval);
-            setTimerCompleted(true); 
+            setTimerCompleted(true);
             return 0;
           }
         });
@@ -62,12 +65,18 @@ const CountdownTimer = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (timerCompleted) {
+      // Play sound when timer completes
+      alarmAudio.play();
+    }
+  }, [timerCompleted, alarmAudio]);
+
   const isCountdownRunning = countdown !== null && countdown !== 0;
 
   return (
     <div className="countdown-container">
-      <h1><span style={{ color: 'white', marginRight:"10px" }}>Countdown</span>
-      <span style={{ color: 'purple' }}>Timer</span></h1>
+      <h1>Countdown Timer</h1>
       <InputForm
         targetDate={targetDate}
         onInputChange={handleInputChange}
