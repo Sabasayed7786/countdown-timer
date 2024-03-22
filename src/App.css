@@ -1,11 +1,21 @@
-.App {
+.app {
   text-align: center;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden; 
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  background: linear-gradient(to bottom left, rgb(103, 205, 212), rgb(178, 112, 178)); 
+  
 }
 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
+
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
